@@ -1,0 +1,135 @@
+@font-face {
+    font-family: 'Rem';
+    src: url('./assets/fonts/REM-Regular.ttf');
+}
+
+:root{
+    /* Typography */
+    --font-family: 'Rem', sans-serif;
+    --highlight-color: rgb(71 184 245);
+    --highlight-background-color: rgba(71, 184, 245, 0.4);
+    --main-background-color: #f4f6fc;
+    --soft-highlight-color:  #737373;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--highlight-color) 50%, rgba(255,255,255,0) 100%);
+}
+
+section.calculator {
+    font-family: var(--font-family);
+    width: 375px;
+    margin: 69px auto;
+    text-align: center;
+    background: var(--main-background-color);
+    border-radius: 40px;
+    padding: 50px 34px;
+    box-sizing: border-box;
+}
+
+.pastScreen, .currentScreen {
+    width: 100%;
+}
+
+.screen {
+    height: 188px;
+    margin-bottom: 74px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    text-align: right;
+}
+
+span.screenOperator {
+    color: var(--highlight-color);
+}
+
+.pastScreen {
+    font-size: 28px;
+    margin-bottom: 21px;
+    color: var(--soft-highlight-color);
+}
+
+.currentScreen {
+    font-size: 44px;
+    line-height: 1;
+}
+
+.buttons {
+    display: flex;
+    height: 382px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.columns1-3 {
+    display: flex;
+    width: 73.5%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 22px;
+}
+
+.column4 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 22px;
+}
+
+.buttons button {
+    color: var(--highlight-color);
+    font-family: var(--font-family);
+    background: #fff;
+    border-color: transparent;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 33px;
+    line-height: 0;
+    width: 59px;
+    height: 59px;
+    transition: box-shadow 0.3s ease;
+}
+
+.buttons button:hover {
+    box-shadow: 3px 5px 15px var(--highlight-background-color);
+}
+
+.buttons button:active {
+    box-shadow: inset 0px 0px 15px var(--highlight-background-color);
+    font-size: 32px;
+}
+
+.buttons button#backspace:active svg{
+    height: 34px;
+}
+
+button.operator {
+    background: var(--highlight-background-color);
+}
+
+button#clear {
+    color: var(--soft-highlight-color);
+}
+
+button#backspace svg {
+    fill: var(--soft-highlight-color);
+    width: auto;
+    height: 36px;
+}
+
+button#add, button#equals {
+    height: 100px;
+}
+
+button#zero {
+    width: 144px;
+}
