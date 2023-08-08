@@ -1,5 +1,5 @@
 let previousNumber = "3+3";
-let currentNumber = "3777";
+let currentNumber = "0";
 let operator = null;
 let hasDecimal = false;
 let resultDisplayed = false;
@@ -11,7 +11,7 @@ function updateDisplay() {
     const currentScreenElement = document.querySelector('.currentScreen');
     const pastScreenElement = document.querySelector('.pastScreen');
   
-    currentScreenElement.textContent = currentNumber;
+    currentScreenElement.textContent = parseInt(currentNumber).toLocaleString();
     pastScreenElement.textContent = previousNumber + (operator ? ` ${operatorSymbol[operator]} ` : "");
   }
 
@@ -23,12 +23,11 @@ function operatorSymbol(op) {
     case "divide": return "/";
   }
 }
-
 function enterNumber(num) {
   if (currentNumber === "0" && num !== 0) {
-    currentNumber = num;
-  } else {
-    currentNumber += num;
+        currentNumber = num.toString();
+  } if(currentNumber.length<13){
+        currentNumber += num;
   }
   updateDisplay();
 }
