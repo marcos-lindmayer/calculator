@@ -28,7 +28,7 @@ function enterNumber(num) {
   if (currentNumber === "0" && num !== 0) {
     currentNumber = num;
   } else {
-    currentNumber += num;
+    currentNumber += toString(num);
   }
   updateDisplay();
 }
