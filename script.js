@@ -1,6 +1,18 @@
 const operations = ["add", "substract", "multiply", "divide"];
 let currentNumber = 0;
 
+const initialState={
+    currentInput: 0,
+    previousInput:0,
+    operator : null,
+    display: '',
+
+}
+
+function enterDecimal(){
+
+}
+
 function add(inputNumber) {
     return currentNumber + inputNumber;
 }
@@ -34,4 +46,8 @@ function operate(inputNumber, operator) {
             break;
     }
     return currentNumber;
+}
+
+for(let i=0;i<9;i++){
+    document.getElementById('buttoo')
 }
