@@ -133,3 +133,10 @@ button#add, button#equals {
 button#zero {
     width: 144px;
 }
+
+
+@media screen and (max-width:450px){
+    #root {
+        max-height: fit-content;
+    }
+}
