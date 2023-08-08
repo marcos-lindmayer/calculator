@@ -1,53 +1,90 @@
-const operations = ["add", "substract", "multiply", "divide"];
-let currentNumber = 0;
+let previousNumber = 0;
+let currentNumber = "0";
+let operator = null;
+let hasDecimal = false;
 
-const initialState={
-    currentInput: 0,
-    previousInput:0,
-    operator : null,
-    display: '',
+let currentScreen = document.querySelector('.currentScreen');
+let pastScreen = document.querySelector('.pastScreen');
 
+function updateDisplay() {
+    const currentScreenElement = document.querySelector('.currentScreen');
+    const pastScreenElement = document.querySelector('.pastScreen');
+  
+    currentScreenElement.textContent = currentNumber;
+    pastScreenElement.textContent = previousNumber + (operator ? ` ${operator} ` : "");
+  }
+
+function operatorSymbol(op) {
+  switch (op) {
+    case "add": return "+";
+    case "subtract": return "-";
+    case "multiply": return "*";
+    case "divide": return "/";
+  }
 }
 
-function enterDecimal(){
-
+function enterNumber(num) {
+  if (currentNumber === "0" && num !== 0) {
+    currentNumber = num;
+  } else {
+    currentNumber += num;
+  }
+  updateDisplay();
 }
 
-function add(inputNumber) {
-    return currentNumber + inputNumber;
+function enterFloat() {
+  if (hasDecimal) return;
+  currentNumber += '.';
+  hasDecimal = true;
+  updateDisplay();
 }
 
-function substract(inputNumber) {
-    return currentNumber - inputNumber;
+function enterOperator(newOperator) {
+  if (hasDecimal) currentNumber = parseFloat(currentNumber);
+  previousNumber = currentNumber;
+  currentNumber = "0";
+  operator = newOperator;
+  hasDecimal = false;
+  updateDisplay();
 }
-
-function multiply(inputNumber) {
-    return currentNumber * inputNumber;
-}
-
-function divide(inputNumber) {
-    return currentNumber / inputNumber;
-}
-
-function operate(inputNumber, operator) {
+  
+  function add(newNum) {
+    return currentNumber + newNum;
+  }
+  
+  function subtract(newNum) {
+    return currentNumber - newNum;
+  }
+  
+  function multiply(newNum) {
+    return currentNumber * newNum;
+  }
+  
+  function divide(newNum) {
+    return currentNumber / newNum;
+  }
+  
+  function operate(inputNumber) {
     switch (operator) {
-        case "add":
-            currentNumber = add(inputNumber);
-            break;
-        case "substract":
-            currentNumber = substract(inputNumber);
-            break;
-        case "multiply":
-            currentNumber = multiply(inputNumber);
-            break;
-        case "divide":
-            if (inputNumber === 0) return null;
-            currentNumber = divide(inputNumber);
-            break;
+      case "add":
+        currentNumber = add(inputNumber);
+        break;
+      case "subtract":
+        currentNumber = subtract(inputNumber);
+        break;
+      case "multiply":
+        currentNumber = multiply(inputNumber);
+        break;
+      case "divide":
+        if (inputNumber === 0) return null;
+        updateDisplay();
+        currentNumber = divide(inputNumber);
+        break;
     }
+    currentNumber = Math.round(currentNumber * 10000) / 10000; // Limiting to 4 decimal points
     return currentNumber;
-}
+  }
 
-for(let i=0;i<9;i++){
-    document.getElementById('buttoo')
-}
+  document.addEventListener('DOMContentLoaded', () => {
+    updateDisplay();
+  });  
