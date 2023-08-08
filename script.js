@@ -93,12 +93,12 @@ function enterOperator(newOperator) {
   function clearScreens(){
         previousNumber = "0";
         currentNumber = "0";
-        updateDisplay()
+        updateDisplay();
   }
 
   function backSpace(){
     if(resultDisplayed){
-      clearScreens()
+      clearScreens();
     }
     else{
       let currentList = currentNumber.split("");
@@ -106,24 +106,25 @@ function enterOperator(newOperator) {
       currentList.pop(currentList.length-1,1);
       currentNumber  = currentList.join("");
     }
-    updateDisplay()
+    updateDisplay();
   }
 
 
-  // EventListeners  
-  const num0 = document.getElementById("num0").addEventListener('click',() => enterNumber(0))
-  const num1 = document.getElementById("num1").addEventListener('click',() => enterNumber(1))
-  const num2 = document.getElementById("num2").addEventListener('click',() => enterNumber(2))
-  const num3 = document.getElementById("num3").addEventListener('click',() => enterNumber(3))
-  const num4 = document.getElementById("num4").addEventListener('click',() => enterNumber(4))
-  const num5 = document.getElementById("num5").addEventListener('click',() => enterNumber(5))
-  const num6 = document.getElementById("num6").addEventListener('click',() => enterNumber(6))
-  const num7 = document.getElementById("num7").addEventListener('click',() => enterNumber(7))
-  const num8 = document.getElementById("num8").addEventListener('click',() => enterNumber(8))
-  const num9 = document.getElementById("num9").addEventListener('click',() => enterNumber(9))
+  // EventListeners 
 
-  const equal = document.getElementById("equal").addEventListener('click',() =>equal())
+  const num0 = document.getElementById("zero").addEventListener('click',() => enterNumber(0));
+  const num1 = document.getElementById("one").addEventListener('click',() => enterNumber(1));
+  const num2 = document.getElementById("two").addEventListener('click',() => enterNumber(2));
+  const num3 = document.getElementById("three").addEventListener('click',() => enterNumber(3));
+  const num4 = document.getElementById("four").addEventListener('click',() => enterNumber(4));
+  const num5 = document.getElementById("five").addEventListener('click',() => enterNumber(5));
+  const num6 = document.getElementById("six").addEventListener('click',() => enterNumber(6));
+  const num7 = document.getElementById("seven").addEventListener('click',() => enterNumber(7));
+  const num8 = document.getElementById("eight").addEventListener('click',() => enterNumber(8));
+  const num9 = document.getElementById("nine").addEventListener('click',() => enterNumber(9));
+
+  const equal = document.getElementById("equals").addEventListener('click',() =>equal());
   
-  const clear = document.getElementById("clear").addEventListener('click',() =>clearScreens())
+  const clear = document.getElementById("clear").addEventListener('click',() =>clearScreens());
 
-  const backspace = document.getElementById("backspace").addEventListener('click',() => backSpace())
+  const backspace = document.getElementById("backspace").addEventListener('click',() => backSpace());
