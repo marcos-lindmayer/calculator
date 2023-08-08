@@ -11,7 +11,7 @@ function updateDisplay() {
     const pastScreenElement = document.querySelector('.pastScreen');
   
     currentScreenElement.textContent = currentNumber;
-    pastScreenElement.textContent = previousNumber + (operator ? ` ${operator} ` : "");
+    pastScreenElement.textContent = previousNumber + (operator ? ` ${operatorSymbol[operator]} ` : "");
   }
 
 function operatorSymbol(op) {
