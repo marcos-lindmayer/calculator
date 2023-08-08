@@ -1,7 +1,8 @@
-let previousNumber = 0;
-let currentNumber = "0";
+let previousNumber = "3+3";
+let currentNumber = "3777";
 let operator = null;
 let hasDecimal = false;
+let resultDisplayed = false;
 
 let currentScreen = document.querySelector('.currentScreen');
 let pastScreen = document.querySelector('.pastScreen');
@@ -88,3 +89,41 @@ function enterOperator(newOperator) {
   document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   });  
+  
+  function clearScreens(){
+        previousNumber = "0";
+        currentNumber = "0";
+        updateDisplay()
+  }
+
+  function backSpace(){
+    if(resultDisplayed){
+      clearScreens()
+    }
+    else{
+      let currentList = currentNumber.split("");
+
+      currentList.pop(currentList.length-1,1);
+      currentNumber  = currentList.join("");
+    }
+    updateDisplay()
+  }
+
+
+  // EventListeners  
+  const num0 = document.getElementById("num0").addEventListener('click',() => enterNumber(0))
+  const num1 = document.getElementById("num1").addEventListener('click',() => enterNumber(1))
+  const num2 = document.getElementById("num2").addEventListener('click',() => enterNumber(2))
+  const num3 = document.getElementById("num3").addEventListener('click',() => enterNumber(3))
+  const num4 = document.getElementById("num4").addEventListener('click',() => enterNumber(4))
+  const num5 = document.getElementById("num5").addEventListener('click',() => enterNumber(5))
+  const num6 = document.getElementById("num6").addEventListener('click',() => enterNumber(6))
+  const num7 = document.getElementById("num7").addEventListener('click',() => enterNumber(7))
+  const num8 = document.getElementById("num8").addEventListener('click',() => enterNumber(8))
+  const num9 = document.getElementById("num9").addEventListener('click',() => enterNumber(9))
+
+  const equal = document.getElementById("equal").addEventListener('click',() =>equal())
+  
+  const clear = document.getElementById("clear").addEventListener('click',() =>clearScreens())
+
+  const backspace = document.getElementById("backspace").addEventListener('click',() => backSpace())
