@@ -90,7 +90,7 @@ function enterOperator(newOperator) {
   });  
   
   function clearScreens(){
-        previousNumber = "0";
+        previousNumber = "";
         currentNumber = "0";
         updateDisplay();
   }
@@ -98,6 +98,9 @@ function enterOperator(newOperator) {
   function backSpace(){
     if(resultDisplayed){
       clearScreens();
+    }
+    else if(currentNumber.length==1){
+      currentNumber = "0";
     }
     else{
       let currentList = currentNumber.split("");
