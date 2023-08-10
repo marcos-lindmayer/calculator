@@ -1,53 +1,164 @@
-const operations = ["add", "substract", "multiply", "divide"];
-let currentNumber = 0;
+let previousNumber = null;
+let prevpreviousNumber = null;
+let currentNumber = "0";
+let operator = null;
+let hasDecimal = false;
+let resultDisplayed = false;
+let equalPressed = false;
+let previousDisplay = "";
+let currentEquation = "";
 
-const initialState={
-    currentInput: 0,
-    previousInput:0,
-    operator : null,
-    display: '',
-
+function updateDisplay() {
+  const currentScreenElement = document.querySelector('.currentScreen');
+  const pastScreenElement = document.querySelector('.pastScreen');
+  currentScreenElement.textContent = currentNumber ? parseFloat(currentNumber).toLocaleString() || "0": operator;
+  pastScreenElement.textContent = resultDisplayed ? previousDisplay : "";
 }
 
-function enterDecimal(){
-
+function enterNumber(num) {
+  if (resultDisplayed || equalPressed) {
+      currentEquation = "";
+      currentNumber = num.toString();
+      resultDisplayed = false;
+      equalPressed = false;
+  } else if (currentNumber.length < 13) {
+      currentNumber += num;
+  }
+  currentEquation += num;
+  updateDisplay();
 }
 
-function add(inputNumber) {
-    return currentNumber + inputNumber;
+
+function enterFloat() {
+  if (hasDecimal) return;
+  currentNumber += '.';
+  currentEquation += '.';
+  hasDecimal = true;
+  updateDisplay();
 }
 
-function substract(inputNumber) {
-    return currentNumber - inputNumber;
+function enterOperator(newOperator) {
+  if (hasDecimal) {
+      currentNumber = parseFloat(currentNumber).toString();
+      hasDecimal = false;
+  }
+  prevpreviousNumber = currentNumber;
+  currentNumber = "";
+  operator = newOperator;
+  currentEquation += ' ' + newOperator + ' ';
+  updateDisplay();
 }
 
-function multiply(inputNumber) {
-    return currentNumber * inputNumber;
-}
-
-function divide(inputNumber) {
-    return currentNumber / inputNumber;
-}
-
-function operate(inputNumber, operator) {
+function operate(inputNumber) {
+    let result;
     switch (operator) {
-        case "add":
-            currentNumber = add(inputNumber);
+        case "+":
+            result = add(inputNumber);
             break;
-        case "substract":
-            currentNumber = substract(inputNumber);
+        case "-":
+            result = subtract(inputNumber);
             break;
-        case "multiply":
-            currentNumber = multiply(inputNumber);
+        case "*":
+            result = multiply(inputNumber);
             break;
-        case "divide":
-            if (inputNumber === 0) return null;
-            currentNumber = divide(inputNumber);
+        case "/":
+            result = divide(inputNumber);
             break;
     }
-    return currentNumber;
+    return isInteger(result) ? parseInt(result) : parseFloat(result).toFixed(4);
 }
 
-for(let i=0;i<9;i++){
-    document.getElementById('buttoo')
+function isInteger(number) {
+  return parseFloat(number) === parseInt(number);
 }
+
+function equals() {
+  previousNumber = currentNumber;
+  currentNumber = operate(previousNumber);
+
+  previousDisplay = currentEquation + ' = ' + formatNumber(currentNumber);
+
+  currentEquation = "";
+  resultDisplayed = true;
+  equalPressed = true;
+  updateDisplay();
+  resetStateAfterOperation();
+}
+
+function formatNumber(number) {
+  if (isInteger(number)) {
+      return parseInt(number);
+  } else {
+      return parseFloat(parseFloat(number).toFixed(4)).toString();
+  }
+}
+
+
+function resetStateAfterOperation() {
+  prevpreviousNumber = null;
+  operator = null;
+  hasDecimal = false;
+  equalPressed = false;
+}
+
+function clearScreens() {
+  prevpreviousNumber = null;
+  currentNumber = "0";
+  previousDisplay = "";
+  currentEquation = "";
+  resetStateAfterOperation();
+  updateDisplay();
+}
+
+function backSpace() {
+  if (currentNumber.length === 1) {
+      currentNumber = "0";
+  } else {
+      currentNumber = currentNumber.slice(0, -1);
+  }
+  currentEquation = currentEquation.slice(0, -1);
+  updateDisplay();
+}
+
+function add(newNum) {
+    return parseFloat(prevpreviousNumber) + parseFloat(newNum);
+}
+
+function subtract(newNum) {
+    return parseFloat(prevpreviousNumber) - parseFloat(newNum);
+}
+
+function multiply(newNum) {
+    return parseFloat(prevpreviousNumber) * parseFloat(newNum);
+}
+
+function divide(newNum) {
+    if (parseFloat(newNum) === 0) return null;
+    return parseFloat(prevpreviousNumber) / parseFloat(newNum);
+}
+
+function inputKey(buttonId) {
+    const buttonClicked = document.getElementById(buttonId);
+    const buttonValue = buttonClicked.innerHTML;
+
+    if (isNaN(Number(buttonValue))) {
+        switch (buttonId) {
+            case "equals": equals(); break;
+            case "clear": clearScreens(); break;
+            case "backspace": backSpace(); break;
+            case "dot": enterFloat(); break;
+            default: enterOperator(buttonValue); break;
+        }
+    } else {
+        enterNumber(buttonValue);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateDisplay();
+});
+
+const allButtons = document.querySelectorAll(".buttons button");
+allButtons.forEach(button => {
+    button.addEventListener('click', () => inputKey(button.id));
+});
