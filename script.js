@@ -6,13 +6,27 @@ let hasDecimal = false;
 let currentScreen = document.querySelector('.currentScreen');
 let pastScreen = document.querySelector('.pastScreen');
 
+//
+
+
+const numberButtons = document.querySelectorAll('.number');
+
+numberButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    enterNumber(button.textContent);
+  });
+});
+
+//
+
+
 function updateDisplay() {
-    const currentScreenElement = document.querySelector('.currentScreen');
-    const pastScreenElement = document.querySelector('.pastScreen');
-  
-    currentScreenElement.textContent = currentNumber;
-    pastScreenElement.textContent = previousNumber + (operator ? ` ${operatorSymbol[operator]} ` : "");
-  }
+  const currentScreenElement = document.querySelector('.currentScreen');
+  const pastScreenElement = document.querySelector('.pastScreen');
+
+  currentScreenElement.textContent = currentNumber;
+  pastScreenElement.textContent = previousNumber + (operator ? ` ${operatorSymbol[operator]} ` : "");
+}
 
 function operatorSymbol(op) {
   switch (op) {
@@ -47,44 +61,44 @@ function enterOperator(newOperator) {
   hasDecimal = false;
   updateDisplay();
 }
-  
-  function add(newNum) {
-    return currentNumber + newNum;
-  }
-  
-  function subtract(newNum) {
-    return currentNumber - newNum;
-  }
-  
-  function multiply(newNum) {
-    return currentNumber * newNum;
-  }
-  
-  function divide(newNum) {
-    return currentNumber / newNum;
-  }
-  
-  function operate(inputNumber) {
-    switch (operator) {
-      case "add":
-        currentNumber = add(inputNumber);
-        break;
-      case "subtract":
-        currentNumber = subtract(inputNumber);
-        break;
-      case "multiply":
-        currentNumber = multiply(inputNumber);
-        break;
-      case "divide":
-        if (inputNumber === 0) return null;
-        updateDisplay();
-        currentNumber = divide(inputNumber);
-        break;
-    }
-    currentNumber = Math.round(currentNumber * 10000) / 10000; // Limiting to 4 decimal points
-    return currentNumber;
-  }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    updateDisplay();
-  });  
+function add(newNum) {
+  return currentNumber + newNum;
+}
+
+function subtract(newNum) {
+  return currentNumber - newNum;
+}
+
+function multiply(newNum) {
+  return currentNumber * newNum;
+}
+
+function divide(newNum) {
+  return currentNumber / newNum;
+}
+
+function operate(inputNumber) {
+  switch (operator) {
+    case "add":
+      currentNumber = add(inputNumber);
+      break;
+    case "subtract":
+      currentNumber = subtract(inputNumber);
+      break;
+    case "multiply":
+      currentNumber = multiply(inputNumber);
+      break;
+    case "divide":
+      if (inputNumber === 0) return null;
+      updateDisplay();
+      currentNumber = divide(inputNumber);
+      break;
+  }
+  currentNumber = Math.round(currentNumber * 10000) / 10000; // Limiting to 4 decimal points
+  return currentNumber;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateDisplay();
+});  
