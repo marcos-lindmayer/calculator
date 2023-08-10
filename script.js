@@ -42,7 +42,7 @@ function enterOperator(newOperator) {
       currentNumber = parseFloat(currentNumber);
       hasDecimal = false;
   }
-  else if (newOperator !== null) {
+  if (newOperator !== null) {
       // An operator and a previous number exist, perform the operation before switching the operator
       prevpreviousNumber = currentNumber;
       currentNumber = "";
