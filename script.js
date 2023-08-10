@@ -21,14 +21,18 @@ function enterNumber(num) {
     } else if(equalPressed){
       currentNumber = num;
       previousNumber = null;
-      updateDisplay();
+      operator = null;
+      previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "");
+      updateDisplay(previousDisplay);
+      console.log(previousDisplay);
       equalPressed = false;
       return;
     }
     else if (currentNumber.length < 13) {
         currentNumber += num;
     }
-    updateDisplay();
+    previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "");
+    updateDisplay(previousDisplay);
 }
 
 function enterFloat() {
@@ -97,10 +101,15 @@ function operate(inputNumber) {
 }
 
 function equals() {
+    prevpreviousNumber = currentNumber;
     currentNumber = operate(currentNumber); // Removed unnecessary parsing
     resultDisplayed = true;
-    previousDisplay = previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "") +  prevpreviousNumber + "=";
+    equalPressed = true;
+    previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "") +  prevpreviousNumber + "=";
     updateDisplay(previousDisplay);
+    previousNumber = null;
+    prevpreviousNumber = null;
+    currentNumber = null;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -139,10 +148,13 @@ function inputKey(buttonId) {
                 break;
             case "clear":
                 clearScreens();
-                break; // Added a missing break
+                break; 
             case "backspace":
                 backSpace();
-                break; // Added a missing break
+                break; 
+            case "dot":
+                enterFloat();
+                break; 
             default:
                 enterOperator(buttonValue);
                 break;
