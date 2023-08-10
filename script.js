@@ -47,6 +47,7 @@ function enterOperator(newOperator) {
       // An operator and a previous number exist, perform the operation before switching the operator
       prevpreviousNumber = currentNumber;
       currentNumber = "";
+      operatorCount++;
       console.log(prevpreviousNumber);
       operator = newOperator;
       previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
@@ -99,6 +100,7 @@ function operate(inputNumber) {
 }
 
 function equals() {
+    console.log(operatorCount);
     if(previousNumber === null){
       previousNumber = currentNumber;
       currentNumber = operate(previousNumber); 
@@ -108,8 +110,9 @@ function equals() {
       previousDisplay = (prevpreviousNumber? prevpreviousNumber : "") + (operator? operator : "") +  previousNumber + "=";
       updateDisplay(previousDisplay);
     }
-    else if(operatorCount>0){
+    else if(operatorCount>0){     // for calculations without using equal button
       console.log(prevpreviousNumber,previousNumber);
+      prevpreviousNumber = currentNumber;
       currentNumber = operate(previousNumber);
       resultDisplayed = true;
       equalPressed = true;
