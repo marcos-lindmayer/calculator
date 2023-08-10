@@ -99,9 +99,8 @@ function operate(inputNumber) {
 }
 
 function equals() {
-    
     if(previousNumber === null){
-      previousNumber = prevpreviousNumber;
+      previousNumber = currentNumber;
       currentNumber = operate(previousNumber); 
       
       resultDisplayed = true;
