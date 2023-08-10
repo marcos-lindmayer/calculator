@@ -53,9 +53,13 @@ function enterOperator(newOperator) {
       previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
       updateDisplay(previousDisplay);
   
-} if (operatorCount>0) {
+} if (operatorCount>1) {
     operatorCount++;
     previousNumber = currentNumber;
+    currentNumber = "";
+    operatorCount++;
+    console.log(prevpreviousNumber);
+    operator = newOperator;
     console.log(currentNumber);
     equals();
 }
@@ -110,7 +114,7 @@ function equals() {
       previousDisplay = (prevpreviousNumber? prevpreviousNumber : "") + (operator? operator : "") +  previousNumber + "=";
       updateDisplay(previousDisplay);
     }
-    else if(operatorCount>0){     // for calculations without using equal button
+    else if(operatorCount>1){     // for calculations without using equal button
       console.log(prevpreviousNumber,previousNumber);
       prevpreviousNumber = currentNumber;
       currentNumber = operate(previousNumber);
