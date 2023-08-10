@@ -26,7 +26,8 @@ function operatorSymbol(op) {
 function enterNumber(num) {
   if (currentNumber === "0" && num !== 0) {
         currentNumber = num.toString();
-  } if(currentNumber.length<13){
+        
+  } else if(currentNumber.length<13){
         currentNumber += num;
   }
   updateDisplay();
