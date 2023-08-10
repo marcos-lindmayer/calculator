@@ -36,13 +36,14 @@ function enterFloat() {
     hasDecimal = true;
     updateDisplay();
 }
-
+let operatorCount = 0;
 function enterOperator(newOperator) {
+  
   if (hasDecimal) {
       currentNumber = parseFloat(currentNumber);
       hasDecimal = false;
   }
-  if (newOperator !== null) {
+  if (newOperator !== null && operatorCount===0 ) {
       // An operator and a previous number exist, perform the operation before switching the operator
       prevpreviousNumber = currentNumber;
       currentNumber = "";
@@ -51,7 +52,13 @@ function enterOperator(newOperator) {
       previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
       updateDisplay(previousDisplay);
   
-}}
+} if (operatorCount>0) {
+    operatorCount++;
+    previousNumber = currentNumber;
+    console.log(currentNumber);
+    equals();
+}
+}
 
 function add(newNum) {
     return parseFloat(prevpreviousNumber) + parseFloat(newNum); // Fixed the conversion issue
@@ -102,6 +109,14 @@ function equals() {
       previousDisplay = (prevpreviousNumber? prevpreviousNumber : "") + (operator? operator : "") +  previousNumber + "=";
       updateDisplay(previousDisplay);
     }
+    else if(operatorCount>0){
+      console.log(prevpreviousNumber,previousNumber);
+      currentNumber = operate(previousNumber);
+      resultDisplayed = true;
+      equalPressed = true;
+      previousDisplay = (currentNumber? currentNumber : "") + (operator? operator : "") ;
+      updateDisplay(previousDisplay);
+    }
     else{
       console.log(prevpreviousNumber,previousNumber);
       prevpreviousNumber = currentNumber; 
@@ -111,6 +126,7 @@ function equals() {
       previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "") +  previousNumber + "=";
       updateDisplay(previousDisplay);
     }
+    operatorCount = 0;  // operator click counter reset
 
 }
 
