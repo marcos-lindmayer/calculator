@@ -112,22 +112,30 @@ function enterOperator(newOperator) {
     updateDisplay();
   }
 
-
+  function inputKey(buttonId) {
+    const buttonClicked = document.getElementById(buttonId);
+    const buttonValue = buttonClicked.innerHTML;
+    if (isNaN(Number(buttonClicked.innerHTML))) {
+        switch (buttonId) {
+          case "equals":
+            equals();
+            break;
+          case "clear":
+            clearScreens();
+          case "backspace":
+            backSpace();
+          default:
+            enterNumber(buttonValue);
+            break;
+        }
+    } else {
+      enterNumber(buttonValue);
+    }
+  }
   // EventListeners 
 
-  const num0 = document.getElementById("zero").addEventListener('click',() => enterNumber(0));
-  const num1 = document.getElementById("one").addEventListener('click',() => enterNumber(1));
-  const num2 = document.getElementById("two").addEventListener('click',() => enterNumber(2));
-  const num3 = document.getElementById("three").addEventListener('click',() => enterNumber(3));
-  const num4 = document.getElementById("four").addEventListener('click',() => enterNumber(4));
-  const num5 = document.getElementById("five").addEventListener('click',() => enterNumber(5));
-  const num6 = document.getElementById("six").addEventListener('click',() => enterNumber(6));
-  const num7 = document.getElementById("seven").addEventListener('click',() => enterNumber(7));
-  const num8 = document.getElementById("eight").addEventListener('click',() => enterNumber(8));
-  const num9 = document.getElementById("nine").addEventListener('click',() => enterNumber(9));
+  const allButtons = document.querySelectorAll(".buttons button");
+  allButtons.forEach(button => {
+    const event = button.addEventListener('click',() => inputKey(button.id));
+  });
 
-  const equal = document.getElementById("equals").addEventListener('click',() =>equal());
-  
-  const clear = document.getElementById("clear").addEventListener('click',() =>clearScreens());
-
-  const backspace = document.getElementById("backspace").addEventListener('click',() => backSpace());
