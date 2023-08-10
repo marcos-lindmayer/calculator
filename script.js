@@ -15,23 +15,18 @@ function updateDisplay(previousDisplay) {
 }
 
 function enterNumber(num) {
-    if ((currentNumber === "0" && num !== "0") || resultDisplayed) { // Fixed the condition
+    if (( (currentNumber === "0" && num !== "0") && operator === null) || resultDisplayed || equalPressed) { // write over the value
         currentNumber = num;
         resultDisplayed = false;
-    } else if(equalPressed){
+        console.log("hey");
+    }else if((currentNumber === "0" && num !== "0") && operator !== null){
       currentNumber = num;
-      previousNumber = null;
-      operator = null;
-      previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "");
-      updateDisplay(previousDisplay);
-      console.log(previousDisplay);
-      equalPressed = false;
-      return;
     }
     else if (currentNumber.length < 13) {
         currentNumber += num;
+
     }
-    previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "");
+    previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
     updateDisplay(previousDisplay);
 }
 
@@ -47,36 +42,32 @@ function enterOperator(newOperator) {
       currentNumber = parseFloat(currentNumber);
       hasDecimal = false;
   }
-  if (previousNumber !== null && operator !== null) {
+  else if (newOperator !== null) {
       // An operator and a previous number exist, perform the operation before switching the operator
-      currentNumber = operate(currentNumber);
-      prevpreviousNumber = previousNumber;
-      previousNumber = currentNumber;
-  } else {
-      previousNumber = currentNumber;
-  }
-  operator = newOperator;
-  resultDisplayed =true;
-  previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "");
-  updateDisplay(previousDisplay);
+      prevpreviousNumber = currentNumber;
+      currentNumber = "";
+      console.log(prevpreviousNumber);
+      operator = newOperator;
+      previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
+      updateDisplay(previousDisplay);
   
-}
+}}
 
 function add(newNum) {
-    return parseFloat(previousNumber) + parseFloat(newNum); // Fixed the conversion issue
+    return parseFloat(prevpreviousNumber) + parseFloat(newNum); // Fixed the conversion issue
 }
 
 function subtract(newNum) {
-    return parseFloat(previousNumber) - parseFloat(newNum); // Fixed the conversion issue
+    return parseFloat(prevpreviousNumber) - parseFloat(newNum); // Fixed the conversion issue
 }
 
 function multiply(newNum) {
-    return parseFloat(previousNumber) * parseFloat(newNum); // Fixed the conversion issue
+    return parseFloat(prevpreviousNumber) * parseFloat(newNum); // Fixed the conversion issue
 }
 
 function divide(newNum) {
     if (parseFloat(newNum) === 0) return null; // Fixed the conversion issue and division by zero check
-    return parseFloat(previousNumber) / parseFloat(newNum); // Fixed the conversion issue
+    return parseFloat(prevpreviousNumber) / parseFloat(newNum); // Fixed the conversion issue
 }
 
 function operate(inputNumber) {
@@ -101,15 +92,26 @@ function operate(inputNumber) {
 }
 
 function equals() {
-    prevpreviousNumber = currentNumber;
-    currentNumber = operate(currentNumber); // Removed unnecessary parsing
-    resultDisplayed = true;
-    equalPressed = true;
-    previousDisplay = (previousNumber ? previousNumber : "") + (operator ? operator : "") +  prevpreviousNumber + "=";
-    updateDisplay(previousDisplay);
-    previousNumber = null;
-    prevpreviousNumber = null;
-    currentNumber = null;
+    
+    if(previousNumber === null){
+      previousNumber = prevpreviousNumber;
+      currentNumber = operate(previousNumber); 
+      
+      resultDisplayed = true;
+      equalPressed = true;
+      previousDisplay = (prevpreviousNumber? prevpreviousNumber : "") + (operator? operator : "") +  previousNumber + "=";
+      updateDisplay(previousDisplay);
+    }
+    else{
+      console.log(prevpreviousNumber,previousNumber);
+      prevpreviousNumber = currentNumber; 
+      currentNumber = operate(previousNumber);
+      resultDisplayed = true;
+      equalPressed = true;
+      previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "") +  previousNumber + "=";
+      updateDisplay(previousDisplay);
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -118,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function clearScreens() {
     previousDisplay = ""; 
+    previousNumber = null;
+    prevpreviousNumber = null;
     currentNumber = "0";
     operator = null; // Reset the operator
     hasDecimal = false;
@@ -126,9 +130,7 @@ function clearScreens() {
 }
 
 function backSpace() {
-    if (resultDisplayed) {
-        clearScreens();
-    } else if (currentNumber.length === 1) {
+    if (currentNumber.length === 1) {
         currentNumber = "0";
     } else {
         let currentList = currentNumber.split("");
