@@ -34,9 +34,10 @@ function enterNumber(num) {
         currentNumber += num;
         previousNumber = currentNumber;
     }
-    else{
+    else {
         currentNumber += num;
     }
+    currentNumber = parseFloat(currentNumber);
     previousNumber = currentNumber;
     previousDisplay = (prevpreviousNumber && previousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
     updateDisplay(previousDisplay);
@@ -222,3 +223,39 @@ const allButtons = document.querySelectorAll(".buttons button");
 allButtons.forEach(button => {
     button.addEventListener('click', () => inputKey(button.id)); // Removed unnecessary event variable
 });
+
+// Key Listeners
+
+document.body.addEventListener('keypress', function(e) {
+    // check if the element is an `input` element and the key is `enter`
+    if (isNaN(Number(e.key))) {
+        switch(e.key) {
+            case "=":
+                    equals();
+                    break;
+                case " ":
+                    clearScreens();
+                    break; 
+                case "Backspace":
+                    backSpace();
+                    break; 
+                case ".":
+                    enterFloat();
+                    break; 
+                case "+":
+                    enterOperator("+");
+                    break;
+                case "-":
+                    enterOperator("-");
+                    break;
+                case "*":
+                    enterOperator("*");
+                    break;
+                case "/":
+                    enterOperator("+");
+                    break;
+        }}
+        else {
+            enterNumber(e.key);
+        }    
+  });
