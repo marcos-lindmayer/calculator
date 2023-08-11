@@ -51,7 +51,7 @@ function enterFloat() {
 
 let operatorCount = 0;   // variable to track if we are using the mode without equal button
 function enterOperator(newOperator) {
-    console.log(previousDisplay);
+    console.log(operatorCount);
     equalPressed=false;
     if (hasDecimal) {
         currentNumber = parseFloat(currentNumber);
@@ -68,14 +68,15 @@ function enterOperator(newOperator) {
         updateDisplay(previousDisplay);
     }
 // the introduction of the second - n operator : calculations are done without clicking equal button
-    else if (operatorCount>1 && previousNumber!==null) {
+    else if (operatorCount>=1 && previousNumber!==null) {
         previousNumber = currentNumber;
-        currentNumber = "0";
-        operatorCount++;
-        console.log(prevpreviousNumber);
+        prevpreviousNumber = operate(previousNumber);
+        operatorCount++; 
         operator = newOperator;
-        console.log(previousNumber);
-        equals();
+        console.log(prevpreviousNumber,previousNumber);   
+        previousDisplay = (currentNumber? currentNumber : "") + (operator? operator : "") ;
+        updateDisplay(previousDisplay);
+        currentNumber ="0";
     }
     // reintroduction of the operator over the old one
     else if (previousDisplay[previousDisplay.length-1]===operator) {
@@ -134,15 +135,6 @@ function equals() {
         resultDisplayed = true;
         equalPressed = true;
         previousDisplay = (prevpreviousNumber? prevpreviousNumber : "") + (operator? operator : "") +  previousNumber + "=";
-        updateDisplay(previousDisplay);
-    }
-    // for calculations without using equal button
-    else if(operatorCount>1){  
-        console.log(prevpreviousNumber,previousNumber);   
-        prevpreviousNumber = operate(previousNumber);
-        resultDisplayed = true;
-        equalPressed = true;
-        previousDisplay = (currentNumber? currentNumber : "") + (operator? operator : "") ;
         updateDisplay(previousDisplay);
     }
     // for default behaviour of equal sign
