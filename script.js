@@ -12,7 +12,7 @@ function updateDisplay() {
   const currentScreenElement = document.querySelector('.currentScreen');
   const pastScreenElement = document.querySelector('.pastScreen');
   currentScreenElement.textContent = currentNumber ? parseFloat(currentNumber).toLocaleString() || "0": operator;
-  pastScreenElement.textContent = resultDisplayed ? previousDisplay : "";
+  pastScreenElement.textContent =  previousDisplay ? previousDisplay : currentEquation;
 }
 
 function enterNumber(num) {
