@@ -182,7 +182,9 @@ function backSpace() {
         currentList.pop(); // Removed unnecessary arguments
         currentNumber = currentList.join("");
     }
-    updateDisplay();
+    previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "")
+
+    updateDisplay(previousDisplay);
 }
 
 function inputKey(buttonId) {
