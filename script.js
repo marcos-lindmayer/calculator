@@ -38,6 +38,11 @@ function enterFloat() {
 }
 
 function enterOperator(newOperator) {
+
+    if (currentNumber === "NaN") {
+        clearScreens(); // Reset the state if the current number is NaN
+      }
+    
     if (resultDisplayed || equalPressed) {
       prevpreviousNumber = currentNumber;
       currentNumber = "";
@@ -83,17 +88,28 @@ function isInteger(number) {
 }
 
 function equals() {
-  previousNumber = currentNumber;
-  currentNumber = operate(previousNumber);
+    if (!operator || currentNumber === "0" || prevpreviousNumber === null) {
+        currentNumber = "NaN"; 
+        updateDisplay(); 
+        return;
+      }
 
-  previousDisplay = currentEquation + ' = ' + formatNumber(currentNumber);
-
-  currentEquation = "";
-  resultDisplayed = true;
-  equalPressed = true;
-  updateDisplay();
-  resetStateAfterOperation();
-}
+    previousNumber = currentNumber;
+    currentNumber = operate(previousNumber);
+  
+    if (typeof currentNumber === 'string') {
+      previousDisplay = currentEquation + ' = ' + currentNumber;
+    } else {
+      previousDisplay = currentEquation + ' = ' + formatNumber(currentNumber);
+    }
+  
+    currentEquation = "";
+    resultDisplayed = true;
+    equalPressed = true;
+    updateDisplay();
+    resetStateAfterOperation();
+  }
+  
 
 function formatNumber(number) {
   if (isInteger(number)) {
@@ -143,9 +159,10 @@ function multiply(newNum) {
 }
 
 function divide(newNum) {
-    if (parseFloat(newNum) === 0) return null;
+    if (parseFloat(newNum) === 0) return "Cannot divide by zero";
     return parseFloat(prevpreviousNumber) / parseFloat(newNum);
-}
+  }
+  
 
 function inputKey(buttonId) {
     const buttonClicked = document.getElementById(buttonId);
