@@ -51,6 +51,7 @@ function enterFloat() {
 
 let operatorCount = 0;   // variable to track if we are using the mode without equal button
 function enterOperator(newOperator) {
+    equalPressed=false;
     if (hasDecimal) {
         currentNumber = parseFloat(currentNumber);
         hasDecimal = false;
