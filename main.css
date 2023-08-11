@@ -17,7 +17,14 @@
     padding: 0;
 }
 
+ html{
+    height: 100%;
+}
 body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     background: rgb(255, 255, 255);
     background: linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--highlight-color) 50%, rgba(255,255,255,0) 100%);
 }
@@ -35,6 +42,7 @@ section.calculator {
 
 .pastScreen, .currentScreen {
     width: 100%;
+    max-width: 350px;
 }
 
 .screen {
@@ -132,4 +140,11 @@ button#add, button#equals {
 
 button#zero {
     width: 144px;
+}
+
+
+@media screen and (max-width:450px){
+    html{
+        max-height: 844px;
+    }
 }
