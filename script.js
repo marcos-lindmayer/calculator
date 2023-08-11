@@ -38,16 +38,26 @@ function enterFloat() {
 }
 
 function enterOperator(newOperator) {
-  if (hasDecimal) {
-      currentNumber = parseFloat(currentNumber).toString();
-      hasDecimal = false;
+    if (resultDisplayed || equalPressed) {
+      prevpreviousNumber = currentNumber;
+      currentNumber = "";
+      currentEquation = formatNumber(prevpreviousNumber) + ' ' + newOperator + ' ';
+      resultDisplayed = false;
+      equalPressed = false;
+    } else {
+      if (hasDecimal) {
+        currentNumber = parseFloat(currentNumber).toString();
+        hasDecimal = false;
+      }
+      prevpreviousNumber = currentNumber;
+      currentNumber = "";
+      operator = newOperator;
+      currentEquation += ' ' + newOperator + ' ';
+    }
+    operator = newOperator; 
+    updateDisplay();
   }
-  prevpreviousNumber = currentNumber;
-  currentNumber = "";
-  operator = newOperator;
-  currentEquation += ' ' + newOperator + ' ';
-  updateDisplay();
-}
+  
 
 function operate(inputNumber) {
     let result;
