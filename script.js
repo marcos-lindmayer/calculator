@@ -181,6 +181,7 @@ function backSpace() {
         let currentList = currentNumber.split("");
         currentList.pop(); // Removed unnecessary arguments
         currentNumber = currentList.join("");
+        previousNumber = currentNumber;
     }
     previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "")
 
