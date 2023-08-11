@@ -8,6 +8,7 @@ let equalPressed = false;
 let previousDisplay = "";
 let currentEquation = "";
 
+
 function updateDisplay() {
   const currentScreenElement = document.querySelector('.currentScreen');
   const pastScreenElement = document.querySelector('.pastScreen');
@@ -38,11 +39,6 @@ function enterFloat() {
 }
 
 function enterOperator(newOperator) {
-
-    if (currentNumber === "NaN") {
-        clearScreens(); // Reset the state if the current number is NaN
-      }
-    
     if (resultDisplayed || equalPressed) {
       prevpreviousNumber = currentNumber;
       currentNumber = "";
