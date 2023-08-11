@@ -51,6 +51,7 @@ function enterFloat() {
 
 let operatorCount = 0;   // variable to track if we are using the mode without equal button
 function enterOperator(newOperator) {
+    console.log(previousDisplay);
     equalPressed=false;
     if (hasDecimal) {
         currentNumber = parseFloat(currentNumber);
@@ -67,7 +68,7 @@ function enterOperator(newOperator) {
         updateDisplay(previousDisplay);
     }
 // the introduction of the second - n operator : calculations are done without clicking equal button
-    else if (operatorCount>1) {
+    else if (operatorCount>1 && previousNumber!==null) {
         previousNumber = currentNumber;
         currentNumber = "0";
         operatorCount++;
@@ -75,6 +76,13 @@ function enterOperator(newOperator) {
         operator = newOperator;
         console.log(previousNumber);
         equals();
+    }
+    // reintroduction of the operator over the old one
+    else if (previousDisplay[previousDisplay.length-1]===operator) {
+        operator = newOperator;
+        previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
+        updateDisplay(previousDisplay);
+
     }
 }
 
