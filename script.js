@@ -20,7 +20,10 @@ function updateDisplay(previousDisplay) {
 }
 
 function enterNumber(num) {
-    if ( (currentNumber === "0" && num !== "0") || resultDisplayed) { // write over the value
+    if(equalPressed){
+        clearScreens(num);
+    }
+    else if ( (currentNumber === "0" && num !== "0") || resultDisplayed) { // write over the value
         currentNumber = num;
         resultDisplayed = false;
         console.log("hey");
@@ -35,7 +38,7 @@ function enterNumber(num) {
         currentNumber += num;
     }
     previousNumber = currentNumber;
-    previousDisplay = (prevpreviousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
+    previousDisplay = (prevpreviousNumber && previousNumber ? prevpreviousNumber : "") + (operator ? operator : "");
     updateDisplay(previousDisplay);
 }
 
@@ -155,11 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
 });
 
-function clearScreens() {
+function clearScreens(num) {
     previousDisplay = ""; 
     previousNumber = null;
     prevpreviousNumber = null;
-    currentNumber = "0";
+    num ? currentNumber = num:currentNumber = "0";
     operator = null; // Reset the operator
     hasDecimal = false;
     resultDisplayed = false;
